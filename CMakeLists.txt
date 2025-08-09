@@ -1,51 +1,24 @@
 cmake_minimum_required(VERSION 3.31)
-project(slay_the_spire_simulator_qt6)
+project(slay_the_spire_simulator_qt6 VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_PREFIX_PATH "C:/Qt/6.2.4/mingw_64")
+# Define QT_INSTALL_PATH cache variable, user must provide
+if(NOT DEFINED QT_INSTALL_PATH)
+    message(STATUS "QT_INSTALL_PATH is not defined. UI will not be built.")
+    set(QT_INSTALL_PATH "" CACHE PATH "Path to Qt6 installation (required for UI)")
+else()
+    message(STATUS "QT_INSTALL_PATH is set to: ${QT_INSTALL_PATH}")
+    set(QT_INSTALL_PATH ${QT_INSTALL_PATH} CACHE PATH "Path to Qt6 installation (required for UI)" FORCE)
+endif()
 
-find_package(Qt6 COMPONENTS
-        Core
-        Gui
-        Widgets
-        REQUIRED)
+# Always build core library
+add_subdirectory(core)
 
-add_executable(slay_the_spire_simulator_qt6 main.cpp)
-target_link_libraries(slay_the_spire_simulator_qt6
-        Qt::Core
-        Qt::Gui
-        Qt::Widgets
-)
-
-if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-    set(DEBUG_SUFFIX)
-    if (MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")
-        set(DEBUG_SUFFIX "d")
-    endif ()
-    set(QT_INSTALL_PATH "${CMAKE_PREFIX_PATH}")
-    if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
-        set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
-        if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
-            set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
-        endif ()
-    endif ()
-    if (EXISTS "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll")
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E make_directory
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy
-                "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll"
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
-    endif ()
-    foreach (QT_LIB Core Gui Widgets)
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy
-                "${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-    endforeach (QT_LIB)
-endif ()
+# Conditionally build ui only if QT_INSTALL_PATH is set and non-empty
+if(QT_INSTALL_PATH)
+    add_subdirectory(ui)
+else()
+    message(STATUS "Skipping UI build because QT_INSTALL_PATH is not set or empty.")
+endif()
