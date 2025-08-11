@@ -16,6 +16,7 @@ endif ()
 # Always build core library
 add_subdirectory(core)
 add_subdirectory(tui)
+add_subdirectory(tests)
 
 # Conditionally build ui only if QT_INSTALL_PATH is set and non-empty
 if (QT_INSTALL_PATH)
