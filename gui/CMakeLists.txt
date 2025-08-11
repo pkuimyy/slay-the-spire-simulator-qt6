@@ -1,9 +1,3 @@
-cmake_minimum_required(VERSION 3.31)
-
-project(ui VERSION 0.1 LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -14,19 +8,19 @@ set(SOURCES
 
 find_package(Qt6 COMPONENTS Widgets Core Gui REQUIRED)
 
-qt_add_executable(ui
+qt_add_executable(gui
         MANUAL_FINALIZATION
         ${SOURCES}
 )
 
-target_link_libraries(ui PRIVATE
+target_link_libraries(gui PRIVATE
         Qt6::Widgets
         Qt6::Core
         Qt6::Gui
         core
 )
 
-set_target_properties(ui PROPERTIES
+set_target_properties(gui PROPERTIES
         MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
         MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
         MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -34,32 +28,32 @@ set_target_properties(ui PROPERTIES
         WIN32_EXECUTABLE TRUE
 )
 
-qt_finalize_executable(ui)
+qt_finalize_executable(gui)
 
-if(WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)
-    if(MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")
+    if (MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")
         set(DEBUG_SUFFIX "d")
-    endif()
-    if(NOT EXISTS "${QT_INSTALL_PATH}/bin")
+    endif ()
+    if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
         set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
-        if(NOT EXISTS "${QT_INSTALL_PATH}/bin")
+        if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
             set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
-        endif()
-    endif()
-    if(EXISTS "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll")
-        add_custom_command(TARGET ui POST_BUILD
+        endif ()
+    endif ()
+    if (EXISTS "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll")
+        add_custom_command(TARGET gui POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E make_directory
-                "$<TARGET_FILE_DIR:ui>/plugins/platforms/")
-        add_custom_command(TARGET ui POST_BUILD
+                "$<TARGET_FILE_DIR:gui>/plugins/platforms/")
+        add_custom_command(TARGET gui POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy
                 "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll"
-                "$<TARGET_FILE_DIR:ui>/plugins/platforms/")
-    endif()
-    foreach(QT_LIB Core Gui Widgets)
-        add_custom_command(TARGET ui POST_BUILD
+                "$<TARGET_FILE_DIR:gui>/plugins/platforms/")
+    endif ()
+    foreach (QT_LIB Core Gui Widgets)
+        add_custom_command(TARGET gui POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy
                 "${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"
-                "$<TARGET_FILE_DIR:ui>")
-    endforeach()
-endif()
+                "$<TARGET_FILE_DIR:gui>")
+    endforeach ()
+endif ()
