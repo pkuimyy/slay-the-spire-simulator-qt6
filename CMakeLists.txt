@@ -13,6 +13,14 @@ else ()
     set(QT_INSTALL_PATH ${QT_INSTALL_PATH} CACHE PATH "Path to Qt6 installation (required for UI)" FORCE)
 endif ()
 
+function(copy_core_dll target)
+    add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:core>
+            $<TARGET_FILE_DIR:${target}>
+    )
+endfunction()
+
 # Always build core library
 add_subdirectory(core)
 add_subdirectory(tui)

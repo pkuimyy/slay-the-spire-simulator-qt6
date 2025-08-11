@@ -1,14 +1,19 @@
-add_library(core SHARED
-        main.cpp
+file(GLOB_RECURSE CORE_SOURCES
+        component/*.cpp
+        entity/*.cpp
+        event/*.cpp
+        system/*.cpp
+        manager/*.cpp
 )
+
+add_library(core SHARED ${CORE_SOURCES})
 
 target_include_directories(core PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-set_target_properties(core PROPERTIES
-        VERSION ${PROJECT_VERSION}
-        SOVERSION 1
+        ${CMAKE_CURRENT_SOURCE_DIR}/component
+        ${CMAKE_CURRENT_SOURCE_DIR}/entity
+        ${CMAKE_CURRENT_SOURCE_DIR}/system
+        ${CMAKE_CURRENT_SOURCE_DIR}/manager
 )
 
 include(FetchContent)
@@ -20,4 +25,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(entt)
 
 target_link_libraries(core PUBLIC EnTT::EnTT)
+
+set_target_properties(core PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+        VERSION ${PROJECT_VERSION}
+        SOVERSION 1
+)
 

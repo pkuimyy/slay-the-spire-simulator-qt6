@@ -6,3 +6,6 @@ ColumnLimit: 120
 UseTab: Never
 AllowShortFunctionsOnASingleLine: Inline
 BreakBeforeBraces: Attach
+SortIncludes: true
+IncludeBlocks: Regroup
+SortUsingDeclarations: true

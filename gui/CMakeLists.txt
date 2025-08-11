@@ -20,6 +20,8 @@ target_link_libraries(gui PRIVATE
         core
 )
 
+copy_core_dll(gui)
+
 set_target_properties(gui PROPERTIES
         MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
         MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
