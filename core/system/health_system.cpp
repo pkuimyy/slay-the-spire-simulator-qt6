@@ -4,6 +4,7 @@
 
 #include "component/health.h"
 #include "spdlog/spdlog.h"
+#include "util/logging.h"
 
 HealthSystem::HealthSystem(entt::registry &reg) : registry(reg) {}
 
@@ -16,7 +17,8 @@ void HealthSystem::onAttack(const AttackEvent &evt) const {
     health->current -= evt.damage;
     if (health->current < 0) health->current = 0;
 
-    spdlog::debug("Entity {} took {} damage. HP: {}/{}", static_cast<int>(evt.target), evt.damage, health->current,
+    const auto &logger = core::getLogger();
+    logger->debug("Entity {} took {} damage. HP: {}/{}", static_cast<int>(evt.target), evt.damage, health->current,
                   health->max);
 
     if (health->current == 0) {

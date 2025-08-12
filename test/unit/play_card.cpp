@@ -7,16 +7,18 @@
 #include "event/attack.h"
 #include "spdlog/spdlog.h"
 #include "system/health_system.h"
+#include "util/logging.h"
 
 void playerUseCard(entt::registry& registry, entt::dispatcher& dispatcher, entt::entity player, entt::entity enemy,
                    entt::entity card) {
     const auto* attack = registry.try_get<Attack>(card);
+    const auto& logger = core::getLogger();
     if (!attack) {
-        spdlog::debug("Card has no attack component!");
+        logger->debug("Card has no attack component!");
         return;
     }
 
-    spdlog::debug("Player uses card dealing {} damage.", attack->damage);
+    logger->debug("Player uses card dealing {} damage.", attack->damage);
 
     AttackEvent evt{player, enemy, attack->damage};
     dispatcher.enqueue(evt);
