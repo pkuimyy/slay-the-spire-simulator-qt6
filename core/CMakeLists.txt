@@ -10,13 +10,11 @@ add_library(core SHARED ${CORE_SOURCES})
 
 target_include_directories(core PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/component
-        ${CMAKE_CURRENT_SOURCE_DIR}/entity
-        ${CMAKE_CURRENT_SOURCE_DIR}/system
-        ${CMAKE_CURRENT_SOURCE_DIR}/manager
 )
 
 include(FetchContent)
+
+# entt
 FetchContent_Declare(
         entt
         GIT_REPOSITORY https://github.com/skypjack/entt.git
@@ -24,7 +22,27 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(entt)
 
-target_link_libraries(core PUBLIC EnTT::EnTT)
+# fmt
+#FetchContent_Declare(
+#        fmt
+#        GIT_REPOSITORY https://github.com/fmtlib/fmt
+#        GIT_TAG 11.2.0
+#)
+#FetchContent_MakeAvailable(fmt)
+
+# spdlog
+#set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "Use external fmt" FORCE)
+FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog.git
+        GIT_TAG v1.15.3
+)
+FetchContent_MakeAvailable(spdlog)
+
+target_link_libraries(core PUBLIC
+        EnTT::EnTT
+        spdlog::spdlog_header_only
+)
 
 set_target_properties(core PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"

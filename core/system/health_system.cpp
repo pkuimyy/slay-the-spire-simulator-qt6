@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "component/health.h"
+#include "spdlog/spdlog.h"
 
 HealthSystem::HealthSystem(entt::registry &reg) : registry(reg) {}
 
@@ -15,10 +16,10 @@ void HealthSystem::onAttack(const AttackEvent &evt) const {
     health->current -= evt.damage;
     if (health->current < 0) health->current = 0;
 
-    std::cout << "Entity " << static_cast<int>(evt.target) << " took " << evt.damage
-              << " damage. HP: " << health->current << "/" << health->max << "\n";
+    spdlog::debug("Entity {} took {} damage. HP: {}/{}", static_cast<int>(evt.target), evt.damage, health->current,
+                  health->max);
 
     if (health->current == 0) {
-        std::cout << "Entity " << static_cast<int>(evt.target) << " died.\n";
+        spdlog::debug("Entity {} died.", static_cast<int>(evt.target));
     }
 }

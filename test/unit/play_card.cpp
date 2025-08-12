@@ -2,20 +2,21 @@
 
 #include <entt/entt.hpp>
 
-#include "attack.h"
+#include "component/attack.h"
+#include "component/health.h"
 #include "event/attack.h"
-#include "health.h"
-#include "health_system.h"
+#include "spdlog/spdlog.h"
+#include "system/health_system.h"
 
-void playerUseCard(entt::registry& registry, entt::dispatcher& dispatcher, const entt::entity player,
-                   const entt::entity enemy, const entt::entity card) {
+void playerUseCard(entt::registry& registry, entt::dispatcher& dispatcher, entt::entity player, entt::entity enemy,
+                   entt::entity card) {
     const auto* attack = registry.try_get<Attack>(card);
     if (!attack) {
-        std::cout << "Card has no attack component!\n";
+        spdlog::debug("Card has no attack component!");
         return;
     }
 
-    std::cout << "Player uses card dealing " << attack->damage << " damage.\n";
+    spdlog::debug("Player uses card dealing {} damage.", attack->damage);
 
     AttackEvent evt{player, enemy, attack->damage};
     dispatcher.enqueue(evt);
