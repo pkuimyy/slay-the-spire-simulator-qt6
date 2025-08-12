@@ -11,6 +11,8 @@ if (NOT DEFINED QT_INSTALL_PATH)
 else ()
     message(STATUS "QT_INSTALL_PATH is set to: ${QT_INSTALL_PATH}")
     set(QT_INSTALL_PATH ${QT_INSTALL_PATH} CACHE PATH "Path to Qt6 installation (required for UI)" FORCE)
+    set(Qt6_DIR "${QT_INSTALL_PATH}/lib/cmake/Qt6" CACHE PATH "Qt6 cmake dir" FORCE)
+    message(STATUS "Qt6_DIR is set to: ${Qt6_DIR}")
 endif ()
 
 function(copy_core_dll target)
