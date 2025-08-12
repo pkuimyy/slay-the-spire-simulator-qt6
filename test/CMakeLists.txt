@@ -23,6 +23,8 @@ target_link_libraries(test
         GTest::gtest_main
 )
 
+copy_core_dll(test)
+
 include(GoogleTest)
 
 gtest_discover_tests(test)
