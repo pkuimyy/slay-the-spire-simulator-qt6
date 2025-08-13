@@ -1,5 +1,5 @@
 #pragma once
-#include "entt/entity/entity.hpp"
+#include "entt/entt.hpp"
 
 struct PlayCardEvent {
     entt::entity player;

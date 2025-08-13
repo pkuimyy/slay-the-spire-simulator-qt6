@@ -4,23 +4,21 @@
 
 #include <entt/entt.hpp>
 
-#include "component/card_effects.h"
 #include "component/health.h"
 #include "component/strength.h"
 #include "event/play_card_event.h"
+#include "game/card/card_database.h"
+#include "game/card/card_factory.h"
+#include "game/character/character_factory.h"
 
 TEST(EventModule, playCardSystem) {
     entt::registry registry;
 
-    const auto player = registry.create();
-    const auto enemy = registry.create();
-    registry.emplace<Health>(enemy, Health{20, 20});
+    const auto player = CharacterFactory::createPlayer(registry);
+    const auto enemy = CharacterFactory::createEnemy(registry);
 
-    const auto inflameCard = registry.create();
-    registry.emplace<CardEffects>(inflameCard, CardEffects{{{CardEffects::Type::GainStrength, 2, 0}}});
-
-    const auto strikeCard = registry.create();
-    registry.emplace<CardEffects>(strikeCard, CardEffects{{{CardEffects::Type::DealDamage, 6, 1}}});
+    const auto inflameCard = CardFactory::createCard(registry, "inflame");
+    const auto strikeCard = CardFactory::createCard(registry, "strike_r");
 
     const PlayCardEvent evt1{player, player, inflameCard};
     PlayCardSystem::onPlayCard(registry, evt1);
