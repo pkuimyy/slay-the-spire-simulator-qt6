@@ -1,36 +1,17 @@
 #include "play_card_system.h"
 
-#include <algorithm>
-
-#include "component/card_effects.h"
-#include "component/health.h"
-#include "component/strength.h"
+#include "game/card/card.h"
+#include "registry/effect_registry.h"
 #include "util/logging.h"
 
-void PlayCardSystem::onPlayCard(entt::registry& registry, const PlayCardEvent evt) {
-    auto& effects = registry.get<CardEffects>(evt.card);
+void PlayCardSystem::onPlayCard(entt::registry& registry, const PlayCardEvent& evt) {
+    const auto* cardComp = registry.try_get<Card>(evt.card);
+    if (!cardComp) return;
 
-    std::vector<CardEffects::Effect> sortedEffects = effects.effects;
-    std::sort(sortedEffects.begin(), sortedEffects.end(),
-              [](const auto& a, const auto& b) { return a.priority < b.priority; });
+    auto& effects = cardComp->effects.effects;  // vector<CardEffects::Effect>
 
-    auto logger = core::getLogger();
-    for (auto& e : sortedEffects) {
-        switch (e.type) {
-            case CardEffects::Type::GainStrength: {
-                auto& str = registry.get_or_emplace<Strength>(evt.player);
-                str.amount += e.value;
-                logger->debug("Player gained {} Strength. Total = {}", e.value, str.amount);
-                break;
-            }
-            case CardEffects::Type::DealDamage: {
-                auto* health = registry.try_get<Health>(evt.target);
-                if (!health) break;
-                health->current -= e.value;
-                if (health->current < 0) health->current = 0;
-                logger->debug("Target took {} damage, HP = {}/{}", e.value, health->current, health->max);
-                break;
-            }
-        }
+    for (auto& e : effects) {
+        auto it = EffectHandlers.find(e.type);
+        if (it != EffectHandlers.end()) it->second->handle(registry, evt.player, evt.target, e);
     }
 }

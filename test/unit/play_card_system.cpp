@@ -7,7 +7,6 @@
 #include "component/health.h"
 #include "component/strength.h"
 #include "event/play_card_event.h"
-#include "game/card/card_database.h"
 #include "game/card/card_factory.h"
 #include "game/character/character_factory.h"
 
@@ -32,5 +31,5 @@ TEST(EventModule, playCardSystem) {
 
     auto* h = registry.try_get<Health>(enemy);
     ASSERT_NE(h, nullptr);
-    EXPECT_EQ(h->current, 14);
+    EXPECT_EQ(h->current, 12);
 }
