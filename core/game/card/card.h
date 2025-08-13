@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#include "component/card_effects.h"
+#include "component/effect.h"
 
 struct Card {
     std::string id;    // "inflame", "strike_r"

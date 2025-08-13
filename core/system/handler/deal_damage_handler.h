@@ -5,8 +5,7 @@
 #include "util/logging.h"
 
 struct DealDamageHandler final : EffectHandler {
-    void handle(entt::registry& registry, const entt::entity player, entt::entity target,
-                const CardEffects::Effect& e) override {
+    void handle(entt::registry& registry, const entt::entity player, entt::entity target, const Effect& e) override {
         auto* health = registry.try_get<Health>(target);
         if (!health) return;
 
