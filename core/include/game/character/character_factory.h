@@ -7,6 +7,19 @@ struct CharacterFactory {
         const entt::entity e = registry.create();
         registry.emplace<Health>(e, Health{hp, maxHp});
         registry.emplace<Strength>(e, Strength{0});
+
+        auto& hand = registry.emplace<Hand>(e);
+        hand.cards.clear();
+
+        auto& deck = registry.emplace<Deck>(e);
+        deck.cards.clear();
+        deck.cards.push_back(CardFactory::createCard(registry, "strike_r"));
+        deck.cards.push_back(CardFactory::createCard(registry, "strike_r"));
+        deck.cards.push_back(CardFactory::createCard(registry, "strike_r"));
+        deck.cards.push_back(CardFactory::createCard(registry, "strike_r"));
+        deck.cards.push_back(CardFactory::createCard(registry, "strike_r"));
+
+        registry.emplace<Discard>(e);
         return e;
     }
 

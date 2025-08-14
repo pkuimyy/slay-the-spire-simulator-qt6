@@ -1,5 +1,6 @@
 #pragma once
 
+#include "component/pile.h"
 #include "component/vulnerable.h"
 #include "event/play_card_event.h"
 #include "game/card/card_factory.h"

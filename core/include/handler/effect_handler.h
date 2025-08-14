@@ -1,5 +1,5 @@
 #pragma once
-#include "component/effect.h"
+#include "pch.h"
 
 struct EffectHandler {
     virtual void handle(entt::registry& registry, entt::entity player, entt::entity target, const Effect& e) = 0;
