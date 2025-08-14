@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-enum class EffectType { GainStrength, DealDamage };
+enum class EffectType { GainStrength, DealDamage, GainBlock };
 
 enum class CardPlayPhase : int { PrePlay, OnPlay, PostPlay };
 

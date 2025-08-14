@@ -11,7 +11,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 file(GLOB_RECURSE TEST_SOURCES
-        ${CMAKE_CURRENT_SOURCE_DIR}/unit/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/unit/**/*.cpp
 )
 
 add_executable(test
