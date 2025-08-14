@@ -1,7 +1,6 @@
 #pragma once
 #include "component/health.h"
 #include "component/strength.h"
-#include "entt/entt.hpp"
 
 struct CharacterFactory {
     static entt::entity createPlayer(entt::registry& registry, const int hp = 20, const int maxHp = 20) {

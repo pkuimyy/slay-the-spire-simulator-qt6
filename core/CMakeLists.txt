@@ -1,15 +1,14 @@
 file(GLOB_RECURSE CORE_SOURCES
-        component/*.cpp
         entity/*.cpp
-        event/*.cpp
-        system/*.cpp
+        include/event/*.cpp
+        src/system/*.cpp
         manager/*.cpp
 )
 
 add_library(core SHARED ${CORE_SOURCES})
 
 target_include_directories(core PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 include(FetchContent)
@@ -21,6 +20,10 @@ FetchContent_Declare(
         GIT_TAG v3.15.0
 )
 FetchContent_MakeAvailable(entt)
+
+target_precompile_headers(core PUBLIC
+        include/pch.h
+)
 
 target_link_libraries(core PUBLIC
         EnTT::EnTT

@@ -1,12 +1,4 @@
-#include <entt/entt.hpp>
-
-#include "component/vulnerable.h"
-#include "event/play_card_event.h"
-#include "game/card/card_factory.h"
-#include "game/character/character_factory.h"
-#include "gtest/gtest.h"
-#include "system/end_turn_system.h"
-#include "system/play_card_system.h"
+#include "pch.h"
 
 TEST(Card, Bash) {
     entt::registry registry;

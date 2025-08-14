@@ -1,5 +1,4 @@
 #pragma once
-#include <entt/entt.hpp>
 
 #include "component/block.h"
 #include "component/vulnerable.h"

@@ -2,7 +2,6 @@
 #include <stdexcept>
 
 #include "card_database.h"
-#include "entt/entt.hpp"
 
 struct CardFactory {
     static entt::entity createCard(entt::registry& registry, const std::string& id) {

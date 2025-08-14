@@ -19,11 +19,19 @@ add_executable(test
         main.cpp
 )
 
+target_include_directories(test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
 target_link_libraries(test
         PRIVATE
         core
         GTest::gtest
         GTest::gtest_main
+)
+
+target_precompile_headers(test PRIVATE
+        include/pch.h
 )
 
 copy_core_dll(test)
