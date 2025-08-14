@@ -14,7 +14,14 @@ struct DealDamageHandler final : EffectHandler {
             bonus = str->amount;
         }
 
-        const int totalDamage = e.value + bonus;
+        int totalDamage = e.value + bonus;
+
+        if (const auto* vuln = registry.try_get<Vulnerable>(target)) {
+            if (vuln->turns > 0) {
+                totalDamage = static_cast<int>(totalDamage * 1.5f);
+            }
+        }
+
         health->current -= totalDamage;
         if (health->current < 0) health->current = 0;
 

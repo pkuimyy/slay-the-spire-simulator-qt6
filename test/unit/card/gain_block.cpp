@@ -7,7 +7,7 @@
 #include "system/end_turn_system.h"
 #include "system/play_card_system.h"
 
-TEST(EventModule, playCardGainBlock) {
+TEST(Card, playCardGainBlock) {
     entt::registry registry;
 
     const auto player = CharacterFactory::createPlayer(registry);
