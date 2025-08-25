@@ -1,8 +1,6 @@
 file(GLOB_RECURSE CORE_SOURCES
-        entity/*.cpp
-        include/event/*.cpp
         src/system/*.cpp
-        manager/*.cpp
+        src/game/*.cpp
 )
 
 add_library(core SHARED ${CORE_SOURCES})

@@ -1,12 +1,21 @@
+#include "game/turn_manager.h"
 #include "pch.h"
 
 TEST(Card, ShrugItOff) {
     entt::registry registry;
+    entt::dispatcher dispatcher;
+
+    TurnManager turnManager(dispatcher, registry);
+
+    turnManager.registerSystem(TurnPhase::EndTurn,
+                               [](entt::registry& reg, entt::entity _) { EndTurnSystem::onEndTurn(reg); });
 
     const auto player = CharacterFactory::createPlayer(registry);
     const auto enemy = CharacterFactory::createEnemy(registry);
 
     const auto shrugCard = CardFactory::createCard(registry, "shrug_it_off");
+
+    turnManager.startTurn(player);
 
     const PlayCardEvent evt{player, enemy, shrugCard};
     PlayCardSystem::onPlayCard(registry, evt);
@@ -19,6 +28,9 @@ TEST(Card, ShrugItOff) {
     ASSERT_NE(hand, nullptr);
     EXPECT_EQ(hand->cards.size(), 1);
 
-    EndTurnSystem::onEndTurn(registry);
+    turnManager.endTurn(player);
+
+    playerBlock = registry.try_get<Block>(player);
+    ASSERT_NE(playerBlock, nullptr);
     EXPECT_EQ(playerBlock->amount, 0);
 }
