@@ -6,9 +6,7 @@ TEST(Card, ShrugItOff) {
     entt::dispatcher dispatcher;
 
     TurnManager turnManager(dispatcher, registry);
-
-    turnManager.registerSystem(TurnPhase::EndTurn,
-                               [](entt::registry& reg, entt::entity _) { EndTurnSystem::onEndTurn(reg); });
+    turnManager.registerDefaultSystems();
 
     const auto player = CharacterFactory::createPlayer(registry);
     const auto enemy = CharacterFactory::createEnemy(registry);

@@ -1,7 +1,12 @@
+#include "game/turn_manager.h"
 #include "pch.h"
 
 TEST(Card, playCardGainBlock) {
     entt::registry registry;
+    entt::dispatcher dispatcher;
+
+    TurnManager turnManager(dispatcher, registry);
+    turnManager.registerDefaultSystems();
 
     const auto player = CharacterFactory::createPlayer(registry);
     const auto blockCard = CardFactory::createCard(registry, "gain_block");
@@ -16,6 +21,7 @@ TEST(Card, playCardGainBlock) {
     ASSERT_NE(block, nullptr);
     EXPECT_EQ(block->amount, 5);
 
-    EndTurnSystem::onEndTurn(registry);
+    turnManager.endTurn(player);
+    block = registry.try_get<Block>(player);
     EXPECT_EQ(block->amount, 0);
 }

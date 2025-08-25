@@ -1,12 +1,19 @@
+#include "game/turn_manager.h"
 #include "pch.h"
 
 TEST(Card, Bash) {
     entt::registry registry;
+    entt::dispatcher dispatcher;
+
+    TurnManager turnManager(dispatcher, registry);
+    turnManager.registerDefaultSystems();
 
     const auto player = CharacterFactory::createPlayer(registry);
     const auto enemy = CharacterFactory::createEnemy(registry);
     const auto bashCard = CardFactory::createCard(registry, "bash");
     const auto strikeCard = CardFactory::createCard(registry, "strike_r");
+
+    turnManager.startTurn(player);
 
     const PlayCardEvent evt1{player, enemy, bashCard};
     PlayCardSystem::onPlayCard(registry, evt1);
@@ -24,7 +31,7 @@ TEST(Card, Bash) {
 
     EXPECT_EQ(h->current, 3);
 
-    EndTurnSystem::onEndTurn(registry);
-
+    turnManager.endTurn(player);
+    vuln = registry.try_get<Vulnerable>(enemy);
     EXPECT_EQ(vuln->turns, 1);
 }

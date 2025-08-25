@@ -11,7 +11,10 @@ class TurnManager {
 
     void endTurn(entt::entity entity);
 
-    void registerSystem(TurnPhase phase, std::function<void(entt::registry&, entt::entity)> system, int priority = 0);
+    void registerSystem(TurnPhase phase, const std::function<void(entt::registry&, entt::entity)>& system,
+                        int priority = 0);
+
+    void registerDefaultSystems();
 
    private:
     struct SystemEntry {
