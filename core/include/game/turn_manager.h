@@ -1,4 +1,5 @@
 #pragma once
+#include "component/health.h"
 #include "event/turn.h"
 #include "pch.h"
 
@@ -28,4 +29,6 @@ class TurnManager {
     std::unordered_map<TurnPhase, std::vector<SystemEntry>> systems;
 
     void executePhase(TurnPhase phase, entt::entity entity);
+
+    bool isAlive(entt::entity entity);
 };

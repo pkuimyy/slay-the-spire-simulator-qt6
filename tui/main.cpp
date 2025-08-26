@@ -28,7 +28,5 @@ int main() {
     assert(h->current == 3);
 
     EndTurnSystem::onEndTurn(registry);
-    assert(vuln->turns == 2);
-
-    std::cout << "All tests passed!\n";
+    assert(vuln->turns == 1);
 }

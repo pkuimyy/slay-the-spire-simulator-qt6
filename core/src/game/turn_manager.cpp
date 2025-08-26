@@ -25,6 +25,10 @@ void TurnManager::executePhase(const TurnPhase phase, const entt::entity entity)
         entry.system(registry, entity);
     }
 }
+bool TurnManager::isAlive(entt::entity entity) {
+    const auto* hp = registry.try_get<Health>(entity);
+    return hp && hp->current > 0;
+}
 
 void TurnManager::registerDefaultSystems() {
     registerSystem(TurnPhase::EndTurn, [](entt::registry& reg, entt::entity) { EndTurnSystem::onEndTurn(reg); });
