@@ -1,32 +1,11 @@
 #pragma once
+#include "component/effect.h"
 #include "component/health.h"
 #include "component/strength.h"
-#include "effect_handler.h"
-#include "util/logging.h"
+#include "component/vulnerable.h"
+#include "handler/effect_handler.h"
 
 struct DealDamageHandler final : EffectHandler {
-    void handle(entt::registry& registry, const entt::entity player, entt::entity target, const Effect& e) override {
-        auto* health = registry.try_get<Health>(target);
-        if (!health) return;
-
-        int bonus = 0;
-        if (const auto* str = registry.try_get<Strength>(player)) {
-            bonus = str->amount;
-        }
-
-        int totalDamage = e.value + bonus;
-
-        if (const auto* vuln = registry.try_get<Vulnerable>(target)) {
-            if (vuln->turns > 0) {
-                totalDamage = static_cast<int>(totalDamage * 1.5f);
-            }
-        }
-
-        health->current -= totalDamage;
-        if (health->current < 0) health->current = 0;
-
-        const auto logger = core::getLogger();
-        logger->debug("Player {} dealt {} damage to entity {}. HP = {}/{}", static_cast<int>(player), totalDamage,
-                      static_cast<int>(target), health->current, health->max);
-    }
+   protected:
+    void handleImpl(entt::registry& registry, entt::entity player, entt::entity target, const Effect& e) override;
 };

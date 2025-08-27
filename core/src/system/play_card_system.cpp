@@ -22,9 +22,10 @@ void PlayCardSystem::onPlayCard(entt::registry& registry, const PlayCardEvent& e
         auto it = phaseMap.find(phase);
         if (it == phaseMap.end()) continue;
 
+        auto& handlers = getEffectHandlers();
         for (auto& e : it->second) {
-            auto handlerIt = EffectHandlers.find(e.type);
-            if (handlerIt != EffectHandlers.end()) {
+            auto handlerIt = handlers.find(e.type);
+            if (handlerIt != handlers.end()) {
                 handlerIt->second->handle(registry, evt.player, evt.target, e);
             } else {
                 logger->warn("No handler registered for effect type {}", static_cast<int>(e.type));
