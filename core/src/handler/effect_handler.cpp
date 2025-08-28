@@ -6,13 +6,7 @@ void EffectHandler::handleBattleEnded(entt::registry& registry, entt::entity pla
 }
 
 bool EffectHandler::isBattleEnded() {
-    return BattleManager::getInstance().isBattleEnded();
+    return false;
 }
 
-void EffectHandler::handle(entt::registry& registry, entt::entity player, entt::entity target, const Effect& e) {
-    if (isBattleEnded()) {
-        handleBattleEnded(registry, player, target, e);
-    } else {
-        handleImpl(registry, player, target, e);
-    }
-}
+void EffectHandler::handle(entt::registry& registry, entt::entity player, entt::entity target, const Effect& e) {}

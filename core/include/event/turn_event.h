@@ -1,14 +1,12 @@
 #pragma once
 #include "pch.h"
 
-struct EndTurnEvent {
+struct TurnStartEvent {
     entt::entity character;
     int turnNumber;
 };
 
-struct BeginTurnEvent {
+struct TurnEndEvent {
     entt::entity character;
     int turnNumber;
 };
-
-enum class TurnPhase { BeginTurn, DrawPhase, PlayPhase, DiscardPhase, EndTurn };

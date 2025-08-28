@@ -1,6 +1,5 @@
 #pragma once
 #include "component/effect.h"
-#include "game/battle_manager.h"
 #include "pch.h"
 
 class EffectHandler {
