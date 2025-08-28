@@ -10,7 +10,12 @@ class BattleManager {
 
     void endBattle();
 
+    void setBattleEnded(bool ended);
+
+    bool isBattleEnded() const;
+
    private:
     entt::dispatcher& dispatcher;
     entt::registry& registry;
+    bool battleEnded{false};
 };
