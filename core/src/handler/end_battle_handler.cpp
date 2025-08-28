@@ -11,4 +11,5 @@ void EndBattleHandler::onBattleEnd(const BattleEndEvent&) {
         return;
     }
     battleManager.setBattleEnded(true);
+    core::getLogger()->debug("Battle ended. EndBattleHandler set battle state to ended.");
 }

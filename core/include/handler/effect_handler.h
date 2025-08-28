@@ -1,17 +1,22 @@
 #pragma once
 #include "component/effect.h"
+#include "manager/battle_manager.h"
 #include "pch.h"
 
 class EffectHandler {
    public:
-    void handle(entt::registry& registry, entt::entity player, entt::entity target, const Effect& e);
+    EffectHandler(entt::dispatcher& _dispatcher, entt::registry& _registry, BattleManager& _battleManager);
+
+    void handle(entt::entity player, entt::entity target, const Effect& e);
 
     virtual ~EffectHandler() = default;
 
    protected:
-    virtual void handleImpl(entt::registry& registry, entt::entity player, entt::entity target, const Effect& e) = 0;
+    entt::dispatcher& dispatcher;
+    entt::registry& registry;
+    BattleManager& battleManager;
 
-    virtual void handleBattleEnded(entt::registry& registry, entt::entity player, entt::entity target, const Effect& e);
+    virtual void handleImpl(entt::entity player, entt::entity target, const Effect& e) = 0;
 
-    static bool isBattleEnded();
+    virtual void handleBattleEnded(entt::entity player, entt::entity target, const Effect& e);
 };

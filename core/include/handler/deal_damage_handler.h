@@ -1,11 +1,13 @@
 #pragma once
 #include "component/effect.h"
 #include "component/health.h"
-#include "component/strength.h"
-#include "component/vulnerable.h"
+#include "event/battle_event.h"
 #include "handler/effect_handler.h"
 
-struct DealDamageHandler final : EffectHandler {
+class DealDamageHandler final : public EffectHandler {
+   public:
+    DealDamageHandler(entt::dispatcher& dispatcher, entt::registry& registry, BattleManager& battleManager);
+
    protected:
-    void handleImpl(entt::registry& registry, entt::entity player, entt::entity target, const Effect& e) override;
+    void handleImpl(entt::entity player, entt::entity target, const Effect& e) override;
 };
