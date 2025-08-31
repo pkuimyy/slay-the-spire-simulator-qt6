@@ -18,12 +18,12 @@ void LogSystem::onBattleEnd(const BattleEndEvent&) {
 }
 
 void LogSystem::onTurnStart(const TurnStartEvent& evt) {
-    core::getLogger()->info("Turn {} started for entity {}", evt.turnNumber, int(evt.character));
+    core::getLogger()->info("Turn {} started for entity {}", evt.turnNumber, static_cast<int>(evt.character));
     records.emplace_back("TurnStart");
 }
 
 void LogSystem::onTurnEnd(const TurnEndEvent& evt) {
-    core::getLogger()->info("Turn {} ended for entity {}", evt.turnNumber, int(evt.character));
+    core::getLogger()->info("Turn {} ended for entity {}", evt.turnNumber, static_cast<int>(evt.character));
     records.emplace_back("TurnEnd");
 }
 

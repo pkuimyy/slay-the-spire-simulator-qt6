@@ -2,7 +2,13 @@
 
 DealDamageHandler::DealDamageHandler(entt::dispatcher& dispatcher, entt::registry& registry,
                                      BattleManager& battleManager)
-    : EffectHandler(dispatcher, registry, battleManager) {};
+    : EffectHandler(dispatcher, registry, battleManager) {
+    dispatcher.sink<DealDamageEvent>().connect<&DealDamageHandler::onDealDamage>(this);
+}
+
+void DealDamageHandler::onDealDamage(const DealDamageEvent& event) {
+    handle(event.player, event.target, event.effect);
+}
 
 void DealDamageHandler::handleImpl(entt::entity player, entt::entity target, const Effect& e) {
     auto* health = registry.try_get<Health>(target);

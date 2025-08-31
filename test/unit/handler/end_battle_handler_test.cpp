@@ -1,3 +1,4 @@
+#include "handler/handler_registry.h"
 #include "pch.h"
 
 TEST(Handler, EndBattleHandler) {
@@ -6,7 +7,7 @@ TEST(Handler, EndBattleHandler) {
 
     BattleManager battleManager(dispatcher, registry);
 
-    EndBattleHandler handler(dispatcher, registry, battleManager);
+    HandlerRegistry handlerRegistry(dispatcher, registry, battleManager);
 
     EXPECT_FALSE(battleManager.isBattleEnded());
 

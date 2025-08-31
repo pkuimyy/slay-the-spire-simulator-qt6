@@ -9,7 +9,7 @@ TEST(System, LogSystem) {
     BattleManager battleManager(dispatcher, registry);
     TurnManager turnManager(dispatcher, registry);
 
-    entt::entity player = registry.create();
+    const entt::entity player = registry.create();
 
     battleManager.startBattle();
     turnManager.startTurn(player);

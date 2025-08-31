@@ -9,5 +9,4 @@
 #include "handler/end_battle_handler.h"
 #include "manager/battle_manager.h"
 #include "manager/turn_manager.h"
-#include "system/end_turn_system.h"
 #include "system/log_system.h"

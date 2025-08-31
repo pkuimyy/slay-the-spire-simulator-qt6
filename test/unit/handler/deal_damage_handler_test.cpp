@@ -1,20 +1,20 @@
+#include "handler/handler_registry.h"
 #include "pch.h"
 
 TEST(Handler, DealDamageHandler) {
     entt::registry registry;
     entt::dispatcher dispatcher;
 
-    entt::entity player = CharacterFactory::createPlayer(registry, 20, 20);
-    entt::entity enemy = CharacterFactory::createEnemy(registry, 10, 10);
+    const entt::entity player = CharacterFactory::createPlayer(registry, 20, 20);
+    const entt::entity enemy = CharacterFactory::createEnemy(registry, 10, 10);
 
     BattleManager battleManager(dispatcher, registry);
-    DealDamageHandler damageHandler(dispatcher, registry, battleManager);
-    [[maybe_unused]] EndBattleHandler endBattleHandler(dispatcher, registry, battleManager);
+    HandlerRegistry handlerRegistry(dispatcher, registry, battleManager);
 
     Effect dmgEffect;
     dmgEffect.value = 6;
 
-    damageHandler.handle(player, enemy, dmgEffect);
+    dispatcher.trigger(DealDamageEvent{player, enemy, dmgEffect});
 
     auto* health = registry.try_get<Health>(enemy);
     ASSERT_NE(health, nullptr);
@@ -22,7 +22,7 @@ TEST(Handler, DealDamageHandler) {
 
     EXPECT_FALSE(battleManager.isBattleEnded());
 
-    damageHandler.handle(player, enemy, dmgEffect);
+    dispatcher.trigger(DealDamageEvent{player, enemy, dmgEffect});
 
     health = registry.try_get<Health>(enemy);
     ASSERT_NE(health, nullptr);

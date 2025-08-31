@@ -8,7 +8,7 @@ class EndBattleHandler {
     EndBattleHandler(entt::dispatcher& _dispatcher, entt::registry& _registry, BattleManager& _battleManager);
 
    private:
-    void onBattleEnd(const struct BattleEndEvent&);
+    void onBattleEnd(const BattleEndEvent&) const;
 
     BattleManager& battleManager;
     entt::dispatcher& dispatcher;

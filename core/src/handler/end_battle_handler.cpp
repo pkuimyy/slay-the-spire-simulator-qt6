@@ -6,7 +6,7 @@ EndBattleHandler::EndBattleHandler(entt::dispatcher& _dispatcher, entt::registry
     dispatcher.sink<BattleEndEvent>().connect<&EndBattleHandler::onBattleEnd>(*this);
 }
 
-void EndBattleHandler::onBattleEnd(const BattleEndEvent&) {
+void EndBattleHandler::onBattleEnd(const BattleEndEvent&) const {
     if (battleManager.isBattleEnded()) {
         return;
     }
