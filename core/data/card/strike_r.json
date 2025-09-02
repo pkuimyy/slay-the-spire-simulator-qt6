@@ -1,0 +1,14 @@
+{
+  "strike_r": {
+    "id": "strike_r",
+    "name": "Strike R",
+    "cost": 1,
+    "effects": [
+      {
+        "type": "DealDamage",
+        "value": 6,
+        "priority": 1
+      }
+    ]
+  }
+}

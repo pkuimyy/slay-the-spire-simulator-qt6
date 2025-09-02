@@ -1,5 +1,5 @@
 file(GLOB_RECURSE CORE_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp
 )
 
 add_library(core SHARED ${CORE_SOURCES})
@@ -18,6 +18,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(entt)
 
+# json
+FetchContent_Declare(
+        json
+        URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
+)
+FetchContent_MakeAvailable(json)
+
 target_precompile_headers(core PUBLIC
         include/pch.h
 )
@@ -25,6 +32,8 @@ target_precompile_headers(core PUBLIC
 target_link_libraries(core PUBLIC
         EnTT::EnTT
         spdlog::spdlog_header_only
+        nlohmann_json::nlohmann_json
+        stdc++fs
 )
 
 set_target_properties(core PROPERTIES
