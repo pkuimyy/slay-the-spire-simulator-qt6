@@ -2,7 +2,7 @@
 
 DealDamageHandler::DealDamageHandler(entt::dispatcher& dispatcher, entt::registry& registry,
                                      BattleManager& battleManager)
-    : EffectHandler(dispatcher, registry, battleManager) {
+    : EventHandler(dispatcher, registry, battleManager) {
     dispatcher.sink<DealDamageEvent>().connect<&DealDamageHandler::onDealDamage>(this);
 }
 

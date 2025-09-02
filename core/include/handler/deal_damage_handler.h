@@ -3,9 +3,9 @@
 #include "component/health.h"
 #include "event/battle_event.h"
 #include "event/deal_damage_event.h"
-#include "handler/effect_handler.h"
+#include "handler/event_handler.h"
 
-class DealDamageHandler final : public EffectHandler {
+class DealDamageHandler final : public EventHandler {
    public:
     DealDamageHandler(entt::dispatcher& dispatcher, entt::registry& registry, BattleManager& battleManager);
 

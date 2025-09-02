@@ -9,7 +9,7 @@ class TurnManager {
 
     void startTurn(entt::entity character);
 
-    void endTurn(entt::entity character);
+    void endTurn(entt::entity character) const;
 
    private:
     entt::dispatcher& dispatcher;

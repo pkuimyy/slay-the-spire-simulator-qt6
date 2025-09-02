@@ -3,20 +3,22 @@
 #include "manager/battle_manager.h"
 #include "pch.h"
 
-class EffectHandler {
+class EventHandler {
    public:
-    EffectHandler(entt::dispatcher& _dispatcher, entt::registry& _registry, BattleManager& _battleManager);
+    EventHandler(entt::dispatcher& _dispatcher, entt::registry& _registry, BattleManager& _battleManager);
 
     void handle(entt::entity player, entt::entity target, const Effect& e);
 
-    virtual ~EffectHandler() = default;
+    virtual ~EventHandler();
 
    protected:
     entt::dispatcher& dispatcher;
     entt::registry& registry;
     BattleManager& battleManager;
 
-    virtual void handleImpl(entt::entity player, entt::entity target, const Effect& e) = 0;
+    virtual void handleImpl(entt::entity player, entt::entity target, const Effect& e);
 
     virtual void handleBattleEnded(entt::entity player, entt::entity target, const Effect& e);
+
+    virtual void triggerEvent(entt::entity player, entt::entity target, const Effect& e);
 };

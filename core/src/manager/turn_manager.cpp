@@ -1,10 +1,10 @@
 #include "manager/turn_manager.h"
 
-void TurnManager::startTurn(entt::entity character) {
+void TurnManager::startTurn(const entt::entity character) {
     turnNumber++;
     dispatcher.trigger(TurnStartEvent{character, turnNumber});
 }
 
-void TurnManager::endTurn(entt::entity character) {
+void TurnManager::endTurn(const entt::entity character) const {
     dispatcher.trigger(TurnEndEvent{character, turnNumber});
 }
